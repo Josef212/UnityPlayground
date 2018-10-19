@@ -15,7 +15,8 @@ public class Graph : MonoBehaviour
 
     GraphFunction[] functions =
     {
-        SineFunction, MultiSineFunction, Sine2DFunction, MultiSine2DFunction, RippleFunction,
+        SineFunction, MultiSineFunction,
+        Sine2DFunction, MultiSine2DFunction, RippleFunction,
         CylinderFunction, SphereFunction, TorusFunction
     };
 
