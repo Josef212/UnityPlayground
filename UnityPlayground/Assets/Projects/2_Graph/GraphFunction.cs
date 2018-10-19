@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public delegate float GraphFunction (float x, float z, float t);
+public delegate Vector3 GraphFunction (float x, float z, float t);
 
 public enum GraphFunctionName
 {
@@ -8,5 +8,8 @@ public enum GraphFunctionName
     MultiSine,
     Sine2D,
     MultiSine2D,
-    Ripple
+    Ripple,
+    Cylinder,
+    Sphere,
+    Torus
 }

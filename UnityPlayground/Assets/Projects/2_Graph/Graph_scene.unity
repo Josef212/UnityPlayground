@@ -219,11 +219,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 490d1981e01084c4ca4c043348fa9be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  function: 4
+  function: 7
   pointPrefab: {fileID: 4087298639327070, guid: 6588fd11cf06f034a91b3eba489795a3,
     type: 2}
   resolution: 50
-  animated: 1
 --- !u!1 &1559111706
 GameObject:
   m_ObjectHideFlags: 0
