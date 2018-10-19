@@ -4,12 +4,17 @@ using UnityEngine;
 public class Clock : MonoBehaviour 
 {
     [SerializeField] private bool continous = true;
-    [SerializeField] private Transform hoursTransform, minutesTransform, secondsTransform;
-    [SerializeField] private float degreesPerHour, degreesPerMinute, degreesPerSecond;
+    [SerializeField] private Transform hoursTransform;
+    [SerializeField] private Transform minutesTransform;
+    [SerializeField] private Transform secondsTransform;
 
-	//========================================================
+    [SerializeField] private float degreesPerHour;
+    [SerializeField] private float degreesPerMinute;
+    [SerializeField] private float degreesPerSecond;
 
-	void Start () 
+    //========================================================
+
+    void Start () 
 	{
         DateTime time = DateTime.Now;
 
