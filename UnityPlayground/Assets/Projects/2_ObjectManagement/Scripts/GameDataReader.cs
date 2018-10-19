@@ -5,11 +5,14 @@ public class GameDataReader
 {
     BinaryReader reader;
 
+    public int Version { get; private set; }
+
     // =============================================================
 
-    public GameDataReader(BinaryReader reader)
+    public GameDataReader(BinaryReader reader, int version)
     {
         this.reader = reader;
+        this.Version = version;
     }
 
     public float ReadFloat()
@@ -43,5 +46,17 @@ public class GameDataReader
         ret.w = reader.ReadSingle();
 
         return ret;
+    }
+
+    public Color ReadColor()
+    {
+        Color c;
+
+        c.r = reader.ReadSingle();
+        c.g = reader.ReadSingle();
+        c.b = reader.ReadSingle();
+        c.a = reader.ReadSingle();
+
+        return c;
     }
 }
