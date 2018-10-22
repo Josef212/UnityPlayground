@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class SpawnZone : MonoBehaviour 
+public class SphereSpawnZones : SpawnZone 
 {
+
     [SerializeField] private bool surfaceOnly;
 
-    public Vector3 SpawnPoint
+    public override Vector3 SpawnPoint
     {
         get
         {

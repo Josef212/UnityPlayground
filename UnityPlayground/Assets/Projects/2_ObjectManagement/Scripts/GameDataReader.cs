@@ -59,4 +59,9 @@ public class GameDataReader
 
         return c;
     }
+
+    public Random.State ReadRandomState()
+    {
+        return JsonUtility.FromJson<Random.State>(reader.ReadString());
+    }
 }

@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Projects/2_ObjectManagement/Scenes/ObjManagement_Level2_scene.unity
     guid: a308bee90dc3f7c4ca9494c61f86d0a6
+  - enabled: 1
+    path: Assets/Projects/2_ObjectManagement/Scenes/ObjManagement_Level3_scene.unity
+    guid: 20dc09d5f9e536045819a80ce3aacc96
+  - enabled: 1
+    path: Assets/Projects/2_ObjectManagement/Scenes/ObjManagement_Level4_scene.unity
+    guid: 158f6ffea60f5c247b0a359be5f73c10
   m_configObjects: {}
