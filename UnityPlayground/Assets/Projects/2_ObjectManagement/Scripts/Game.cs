@@ -17,6 +17,8 @@ public class Game : PersistableObject
 
     [SerializeField] private int levelCount;
 
+    [SerializeField] private SpawnZone spawnZone;
+
 
 
     public float CreationSpeed { get; set; }
@@ -112,7 +114,7 @@ public class Game : PersistableObject
     {
         Shape instance = shapeFactory.GetRandom();
         Transform t = instance.transform;
-        t.localPosition = Random.insideUnitSphere * 5f;
+        t.localPosition = spawnZone.SpawnPoint;
         t.localRotation = Random.rotation;
         t.localScale = Vector3.one * Random.Range(0.1f, 1f);
 
