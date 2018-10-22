@@ -25,8 +25,7 @@
 			half _Metallic;
 			fixed4 _Color;
 
-			void vert(inout appdata_full v, out Input o)
-			{
+			void vert(inout appdata_full v, out Input o) {
 				UNITY_INITIALIZE_OUTPUT(Input, o);
 				#if defined(_FACES_X)
 					o.cubeUV = v.color.yz * 255;
