@@ -164,6 +164,7 @@ public class Game : PersistableObject
     public override void Save(GameDataWriter writer)
     {
         writer.Write(shapes.Count);
+        writer.Write(loadedLevelBuildIndex);
 
         for(int i = 0; i < shapes.Count; ++i)
         {
@@ -182,6 +183,7 @@ public class Game : PersistableObject
         }
 
         int count = version <= 0 ? -version : reader.ReadInt();
+        StartCoroutine(LoadLevel(version < 2 ? 1 : reader.ReadInt()));
 
         for(int i = 0; i < count; ++i)
         {
