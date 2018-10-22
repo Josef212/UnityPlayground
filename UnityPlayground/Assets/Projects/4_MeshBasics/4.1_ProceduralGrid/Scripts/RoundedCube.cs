@@ -11,6 +11,7 @@ public class RoundedCube : MonoBehaviour
 
     private Vector3[] vertices;
     private Vector3[] normals;
+    private Color32[] cubeUV;
 
     private Mesh mesh;
 
@@ -50,6 +51,7 @@ public class RoundedCube : MonoBehaviour
 
         CreateVertices();
         CreateTriangles();
+        CreateColliders();
     }
 
     private void CreateVertices()
@@ -63,6 +65,7 @@ public class RoundedCube : MonoBehaviour
 
         vertices = new Vector3[cornerVertices + edgeVertices + faceVertices];
         normals = new Vector3[vertices.Length];
+        cubeUV = new Color32[vertices.Length];
 
         int v = 0;
         for (int y = 0; y <= ySize; y++)
@@ -101,6 +104,7 @@ public class RoundedCube : MonoBehaviour
 
         mesh.vertices = vertices;
         mesh.normals = normals;
+        mesh.colors32 = cubeUV;
     }
 
     private void CreateTriangles()
@@ -139,6 +143,47 @@ public class RoundedCube : MonoBehaviour
         mesh.SetTriangles(trianglesZ, 0);
         mesh.SetTriangles(trianglesX, 1);
         mesh.SetTriangles(trianglesY, 2);
+    }
+
+    private void CreateColliders()
+    {
+        AddBoxCollider(xSize, ySize - roundness * 2, zSize - roundness * 2);
+        AddBoxCollider(xSize - roundness * 2, ySize, zSize - roundness * 2);
+        AddBoxCollider(xSize - roundness * 2, ySize - roundness * 2, zSize);
+
+        Vector3 min = Vector3.one * roundness;
+        Vector3 half = new Vector3(xSize, ySize, zSize) * 0.5f;
+        Vector3 max = new Vector3(xSize, ySize, zSize) - min;
+
+        AddCapsuleCollider(0, half.x, min.y, min.z);
+        AddCapsuleCollider(0, half.x, min.y, max.z);
+        AddCapsuleCollider(0, half.x, max.y, min.z);
+        AddCapsuleCollider(0, half.x, max.y, max.z);
+
+        AddCapsuleCollider(1, min.x, half.y, min.z);
+        AddCapsuleCollider(1, min.x, half.y, max.z);
+        AddCapsuleCollider(1, max.x, half.y, min.z);
+        AddCapsuleCollider(1, max.x, half.y, max.z);
+
+        AddCapsuleCollider(2, min.x, min.y, half.z);
+        AddCapsuleCollider(2, min.x, max.y, half.z);
+        AddCapsuleCollider(2, max.x, min.y, half.z);
+        AddCapsuleCollider(2, max.x, max.y, half.z);
+    }
+
+    private void AddBoxCollider(float x, float y, float z)
+    {
+        BoxCollider c = gameObject.AddComponent<BoxCollider>();
+        c.size = new Vector3(x, y, z);
+    }
+
+    private void AddCapsuleCollider(int direction, float x, float y, float z)
+    {
+        CapsuleCollider c = gameObject.AddComponent<CapsuleCollider>();
+        c.center = new Vector3(x, y, z);
+        c.direction = direction;
+        c.radius = roundness;
+        c.height = c.center[direction] * 2f;
     }
 
     private int CreateTopFace(int[] triangles, int t, int ring)
@@ -248,6 +293,7 @@ public class RoundedCube : MonoBehaviour
 
         normals[i] = (vertices[i] - inner).normalized;
         vertices[i] = inner + normals[i] * roundness;
+        cubeUV[i] = new Color32((byte)x, (byte)y, (byte)z, 0);
     }
 
     private static int SetQuad(int[] triangles, int i, int v00, int v10, int v01, int v11)
