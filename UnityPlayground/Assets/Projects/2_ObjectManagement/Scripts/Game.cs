@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Game : PersistableObject 
 {
@@ -15,6 +15,8 @@ public class Game : PersistableObject
 
     [SerializeField] private PersistentStorage storage;
 
+    [SerializeField] private int levelCount;
+
 
 
     public float CreationSpeed { get; set; }
@@ -22,16 +24,35 @@ public class Game : PersistableObject
 
     float creationProgress, destructionProgress;
 
+    int loadedLevelBuildIndex;
+
 
     List<Shape> shapes;
 
-    const int saveVersion = 3;
+    const int saveVersion = 2;
     
     //========================================================
 
-    void Awake () 
+    void Start () 
 	{
         shapes = new List<Shape>();
+
+        if(Application.isEditor)
+        {
+            for (int i = 0; i < SceneManager.sceneCount; ++i)
+            {
+                Scene loadedScene = SceneManager.GetSceneAt(i);
+
+                if(loadedScene.name.Contains("ObjManagement_Level"))
+                {
+                    SceneManager.SetActiveScene(loadedScene);
+                    loadedLevelBuildIndex = loadedScene.buildIndex;
+                    return;
+                }
+            }
+        }
+
+        StartCoroutine(LoadLevel(1));
 	}
 	
 
@@ -56,6 +77,18 @@ public class Game : PersistableObject
         else if (Input.GetKey(loadKey))
         {
             storage.Load(this);
+        }
+        else 
+        {
+            for(int i = 1; i <= levelCount; ++i)
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha0 + i))
+                {
+                    BeginNewGame();
+                    StartCoroutine(LoadLevel(i));
+                    return;
+                }
+            }
         }
 
         creationProgress += Time.deltaTime * CreationSpeed;
@@ -109,6 +142,21 @@ public class Game : PersistableObject
         }
 
         shapes.Clear();
+    }
+
+    private IEnumerator LoadLevel(int buildIndex)
+    {
+        enabled = false;
+
+        if(loadedLevelBuildIndex > 0)
+        {
+            yield return SceneManager.UnloadSceneAsync(loadedLevelBuildIndex);
+        }
+
+        yield return SceneManager.LoadSceneAsync(buildIndex, LoadSceneMode.Additive);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(buildIndex));
+        loadedLevelBuildIndex = buildIndex;
+        enabled = true;
     }
 
     // ---------------
