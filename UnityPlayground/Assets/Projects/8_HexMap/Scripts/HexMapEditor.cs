@@ -9,6 +9,7 @@ public class HexMapEditor : MonoBehaviour
     [SerializeField] private HexGrid hexGrid;
 
     private Color activeColor;
+    private int activeElevation;
 
 	//========================================================
 
@@ -20,7 +21,7 @@ public class HexMapEditor : MonoBehaviour
 
 	void Update () 
 	{
-        if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             HandleInput();
         }
@@ -35,12 +36,24 @@ public class HexMapEditor : MonoBehaviour
 
         if (Physics.Raycast(inputRay, out hit))
         {
-            hexGrid.ColorCell(hit.point, activeColor);
+            EditCell(hexGrid.GetCell(hit.point));
         }
     }
 
     public void SelectColor(int index)
     {
         activeColor = colors[index];
+    }
+
+    public void SetElevation(float elevation)
+    {
+        activeElevation = (int)elevation;
+    }
+
+    void EditCell(HexCell cell)
+    {
+        cell.color = activeColor;
+        cell.Elevation = activeElevation;
+        hexGrid.Refresh();
     }
 }
