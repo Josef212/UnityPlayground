@@ -8,6 +8,8 @@ public class HexCell : MonoBehaviour
 
     public Color color;
 
+    [SerializeField]  HexCell[] neighbours;
+
 	//========================================================
 
 	void Start () 
@@ -23,5 +25,14 @@ public class HexCell : MonoBehaviour
 
 	//========================================================
 
-	
+	public HexCell GetNeighbour(HexDirection direction)
+    {
+        return neighbours[(int)direction];
+    }
+
+    public void SetNeighbour(HexDirection direction, HexCell cell)
+    {
+        neighbours[(int)direction] = cell;
+        cell.neighbours[(int)direction.Opposite()] = this;
+    }
 }

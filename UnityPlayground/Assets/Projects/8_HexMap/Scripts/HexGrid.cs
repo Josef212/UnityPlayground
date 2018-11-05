@@ -8,9 +8,6 @@ public class HexGrid : MonoBehaviour
     [SerializeField] private int width = 6;
     [SerializeField] private int height = 6;
 
-    [SerializeField] private Color defaultColor = Color.white;
-    [SerializeField] private Color touchedColor = Color.magenta;
-
     [SerializeField] private HexCell cellPrefab;
     [SerializeField] private Text cellLabelPrefab;
 
@@ -62,7 +59,32 @@ public class HexGrid : MonoBehaviour
         cell.transform.SetParent(transform, false);
         cell.transform.localPosition = position;
         cell.coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
-        cell.color = defaultColor;
+        cell.color = Color.white;
+
+        if(x > 0)
+        {
+            cell.SetNeighbour(HexDirection.W, cells[i - 1]);
+        }
+
+        if(z > 0)
+        {
+            if((z & 1) == 0)
+            {
+                cell.SetNeighbour(HexDirection.SE, cells[i - width]);
+                if(x > 0)
+                {
+                    cell.SetNeighbour(HexDirection.SW, cells[i - width - 1]);
+                }
+            }
+            else
+            {
+                cell.SetNeighbour(HexDirection.SW, cells[i - width]);
+                if(x < width - 1)
+                {
+                    cell.SetNeighbour(HexDirection.SE, cells[i - width + 1]);
+                }
+            }
+        }
 
         Text label = Instantiate<Text>(cellLabelPrefab);
         label.rectTransform.SetParent(gridCanvas.transform, false);
