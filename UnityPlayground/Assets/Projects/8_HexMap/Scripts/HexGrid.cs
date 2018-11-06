@@ -11,6 +11,8 @@ public class HexGrid : MonoBehaviour
     [SerializeField] private HexCell cellPrefab;
     [SerializeField] private Text cellLabelPrefab;
 
+    [SerializeField] private Texture2D noiseSource;
+
     // ----
 
     HexCell[] cells;
@@ -19,8 +21,14 @@ public class HexGrid : MonoBehaviour
 
     //========================================================
 
+    void OnEnable()
+    {
+        HexMetrics.noiseSource = noiseSource;
+    }
+
     void Awake () 
 	{
+        HexMetrics.noiseSource = noiseSource;
         gridCanvas = GetComponentInChildren<Canvas>();
         hexMesh = GetComponentInChildren<HexMesh>();
 
@@ -92,6 +100,9 @@ public class HexGrid : MonoBehaviour
         label.text = cell.coordinates.ToStringOnSeparateLines();
 
         cell.uiRect = label.rectTransform;
+
+        //--
+        cell.Elevation = 0;
     }
     
     public HexCell GetCell(Vector3 position)

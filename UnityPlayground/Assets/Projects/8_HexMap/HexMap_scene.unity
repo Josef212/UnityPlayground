@@ -221,6 +221,7 @@ MonoBehaviour:
     type: 2}
   cellLabelPrefab: {fileID: 114504824869055778, guid: 32d9360cf9606484a8b9d075a8422368,
     type: 2}
+  noiseSource: {fileID: 2800000, guid: a9350c97ff0fc554795cd5bcff4c5fbd, type: 3}
 --- !u!4 &69979417
 Transform:
   m_ObjectHideFlags: 0
@@ -1211,7 +1212,7 @@ MonoBehaviour:
   m_Direction: 2
   m_MinValue: 0
   m_MaxValue: 6
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
