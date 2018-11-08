@@ -16,6 +16,19 @@ public class HexMapEditor : MonoBehaviour
 
     private int brushSize = 0;
 
+    private OptionalToggle riverMode;
+
+    private bool isDrag;
+    private HexDirection dragDirection;
+    private HexCell previousCell;
+
+    // ----
+
+    enum OptionalToggle
+    {
+        Ignore, Yes, No
+    }
+
 	//========================================================
 
 	void Awake () 
@@ -30,6 +43,10 @@ public class HexMapEditor : MonoBehaviour
         {
             HandleInput();
         }
+        else
+        {
+            previousCell = null;
+        }
     }
 
     //========================================================
@@ -41,7 +58,23 @@ public class HexMapEditor : MonoBehaviour
 
         if (Physics.Raycast(inputRay, out hit))
         {
-            EditCells(hexGrid.GetCell(hit.point));
+            HexCell currentCell = hexGrid.GetCell(hit.point);
+
+            if(previousCell && previousCell != currentCell)
+            {
+                ValidateDrag(currentCell);
+            }
+            else
+            {
+                isDrag = false;
+            }
+
+            EditCells(currentCell);
+            previousCell = currentCell;
+        }
+        else
+        {
+            previousCell = null;
         }
     }
 
@@ -77,6 +110,11 @@ public class HexMapEditor : MonoBehaviour
         hexGrid.ShowUI(visible);
     }
 
+    public void SetRiverMode(int mode)
+    {
+        riverMode = (OptionalToggle)mode;
+    }
+
     // --------
 
     void EditCell(HexCell cell)
@@ -91,6 +129,19 @@ public class HexMapEditor : MonoBehaviour
         if(applyElevation)
         {
             cell.Elevation = activeElevation;
+        }
+
+        if(riverMode == OptionalToggle.No)
+        {
+            cell.RemoveRiver();
+        }
+        else if(isDrag && riverMode == OptionalToggle.Yes)
+        {
+            HexCell otherCell = cell.GetNeighbour(dragDirection.Opposite());
+            if(otherCell)
+            {
+                otherCell.SetOutgoingRiver(dragDirection);
+            }
         }
     }
 
@@ -114,5 +165,19 @@ public class HexMapEditor : MonoBehaviour
                 EditCell(hexGrid.GetCell(new HexCoordinates(x, z)));
             }
         }
+    }
+
+    void ValidateDrag(HexCell currentDrag)
+    {
+        for(dragDirection = HexDirection.NE; dragDirection <= HexDirection.NW; ++dragDirection)
+        {
+            if(previousCell.GetNeighbour(dragDirection) == currentDrag)
+            {
+                isDrag = true;
+                return;
+            }
+        }
+
+        isDrag = false;
     }
 }
