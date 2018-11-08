@@ -9,10 +9,10 @@ public class HexMapEditor : MonoBehaviour
     [SerializeField] private HexGrid hexGrid;
 
     private Color activeColor;
-    private int activeElevation;
+    private int activeElevation, activeWaterLevel;
 
     private bool applyColor;
-    private bool applyElevation = true;
+    private bool applyElevation = true, applyWaterLevel = true;
 
     private int brushSize = 0;
 
@@ -100,6 +100,16 @@ public class HexMapEditor : MonoBehaviour
         applyElevation = toggle;
     }
 
+    public void SetApplyWaterLevel(bool toggle)
+    {
+        applyWaterLevel = toggle;
+    }
+
+    public void SetWaterLevel(float level)
+    {
+        activeWaterLevel = (int)level;
+    }
+
     public void SetBrushSize(float size)
     {
         brushSize = (int)size;
@@ -136,6 +146,11 @@ public class HexMapEditor : MonoBehaviour
             cell.Elevation = activeElevation;
         }
 
+        if(applyWaterLevel)
+        {
+            cell.WaterLevel = activeWaterLevel;
+        }
+
         if(riverMode == OptionalToggle.No)
         {
             cell.RemoveRiver();
@@ -148,7 +163,7 @@ public class HexMapEditor : MonoBehaviour
 
         if(isDrag)
         {
-            HexCell otherCell = cell.GetNeighbour(dragDirection.Opposite());
+            HexCell otherCell = cell.GetNeighbor(dragDirection.Opposite());
             if(otherCell)
             {
                 if(riverMode == OptionalToggle.Yes)
@@ -190,7 +205,7 @@ public class HexMapEditor : MonoBehaviour
     {
         for(dragDirection = HexDirection.NE; dragDirection <= HexDirection.NW; ++dragDirection)
         {
-            if(previousCell.GetNeighbour(dragDirection) == currentDrag)
+            if(previousCell.GetNeighbor(dragDirection) == currentDrag)
             {
                 isDrag = true;
                 return;
