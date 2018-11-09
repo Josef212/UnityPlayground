@@ -4,7 +4,7 @@ public class HexFeatureManager : MonoBehaviour
 {
     [SerializeField] private HexFeatureCollection[] urbanCollections, farmCollections, plantCollections;
     [SerializeField] private HexMesh walls;
-    [SerializeField] private Transform wallTower;
+    [SerializeField] private Transform wallTower, bridge;
 
     Transform container;
 
@@ -132,6 +132,22 @@ public class HexFeatureManager : MonoBehaviour
         {
             AddWallSegment(c3, cell3, c1, cell1, c2, cell2);
         }
+    }
+
+    public void AddBridge(Vector3 roadCenter1, Vector3 roadCenter2)
+    {
+        roadCenter1 = HexMetrics.Perturb(roadCenter1);
+        roadCenter2 = HexMetrics.Perturb(roadCenter2);
+
+        Transform instance = Instantiate(bridge);
+        instance.localPosition = (roadCenter1 + roadCenter2) * 0.5f;
+        instance.forward = roadCenter2 - roadCenter1;
+
+        float length = Vector3.Distance(roadCenter1, roadCenter2);
+        instance.localScale = new Vector3(1f, 1f,
+            length * (1f / HexMetrics.bridgeDesignLength));
+
+        instance.SetParent(container, false);
     }
 
     // --------------------------------------

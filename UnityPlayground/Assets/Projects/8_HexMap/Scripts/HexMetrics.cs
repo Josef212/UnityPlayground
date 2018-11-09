@@ -43,6 +43,8 @@ public static class HexMetrics
 
     public const float wallTowerThreshold = 0.5f;
 
+    public const float bridgeDesignLength = 7f;
+
     static HexHash[] hashGrid;
 
     public static Vector3 WallThicknessOffset (Vector3 near, Vector3 far)
