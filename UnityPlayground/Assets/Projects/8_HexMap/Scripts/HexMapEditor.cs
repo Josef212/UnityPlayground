@@ -14,6 +14,9 @@ public class HexMapEditor : MonoBehaviour
     private bool applyColor;
     private bool applyElevation = true, applyWaterLevel = true;
 
+    private int activeUrbanLevel, activeFarmLevel, activePlantLevel;
+    private bool applyUrbanLevel, applyFarmLevel, applyPlantLevel;
+
     private int brushSize = 0;
 
     private OptionalToggle riverMode, roadMode;
@@ -120,6 +123,36 @@ public class HexMapEditor : MonoBehaviour
         hexGrid.ShowUI(visible);
     }
 
+    public void SetApplyUrbanLevel(bool toggle)
+    {
+        applyUrbanLevel = toggle;
+    }
+
+    public void SetUrbanLevel(float level)
+    {
+        activeUrbanLevel = (int)level;
+    }
+
+    public void SetApplyFarmLevel(bool toggle)
+    {
+        applyFarmLevel = toggle;
+    }
+
+    public void SetFarmLevel(float level)
+    {
+        activeFarmLevel = (int)level;
+    }
+
+    public void SetApplyPlantLevel(bool toggle)
+    {
+        applyPlantLevel = toggle;
+    }
+
+    public void SetPlantLevel(float level)
+    {
+        activePlantLevel = (int)level;
+    }
+
     public void SetRiverMode(int mode)
     {
         riverMode = (OptionalToggle)mode;
@@ -149,6 +182,21 @@ public class HexMapEditor : MonoBehaviour
         if(applyWaterLevel)
         {
             cell.WaterLevel = activeWaterLevel;
+        }
+
+        if(applyUrbanLevel)
+        {
+            cell.UrbanLevel = activeUrbanLevel;
+        }
+
+        if(applyFarmLevel)
+        {
+            cell.FarmLevel = activeFarmLevel;
+        }
+
+        if(applyPlantLevel)
+        {
+            cell.PlantLevel = activePlantLevel;
         }
 
         if(riverMode == OptionalToggle.No)

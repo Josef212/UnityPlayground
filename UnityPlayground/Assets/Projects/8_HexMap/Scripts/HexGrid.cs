@@ -14,6 +14,8 @@ public class HexGrid : MonoBehaviour
 
     [SerializeField] private Texture2D noiseSource;
 
+    [SerializeField] private int seed;
+
     // ----
 
     HexCell[] cells;
@@ -26,11 +28,16 @@ public class HexGrid : MonoBehaviour
     void OnEnable()
     {
         HexMetrics.noiseSource = noiseSource;
+        HexMetrics.InitializeHashGrid(seed);
     }
 
     void Awake () 
 	{
-        HexMetrics.noiseSource = noiseSource;
+        if(!HexMetrics.noiseSource)
+        {
+            HexMetrics.noiseSource = noiseSource;
+            HexMetrics.InitializeHashGrid(seed);
+        }
 
         cellCountX = chunkCountX * HexMetrics.chunckSizeX;
         cellCountZ = chunkCountZ * HexMetrics.chunckSizeZ;
