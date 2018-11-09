@@ -678,6 +678,7 @@ MonoBehaviour:
     - {fileID: 4000013997932258, guid: eeb3748a5f0ed40f3ad86263ab781421, type: 2}
     - {fileID: 4000013997932258, guid: 2fe8d139a980145f997e9f4c3e1c2606, type: 2}
   walls: {fileID: 114051588265344242}
+  wallTower: {fileID: 4117998151271874, guid: dd42dca3fb5ee4b48afd080eb356a4af, type: 2}
 --- !u!114 &114265250321354938
 MonoBehaviour:
   m_ObjectHideFlags: 1
