@@ -47,6 +47,8 @@ public static class HexMetrics
 
     static HexHash[] hashGrid;
 
+    public static Color[] colors;
+
     public static Vector3 WallThicknessOffset (Vector3 near, Vector3 far)
     {
         Vector3 offset;

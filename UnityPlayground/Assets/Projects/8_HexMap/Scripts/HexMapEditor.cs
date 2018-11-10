@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.IO;
 
 public class HexMapEditor : MonoBehaviour 
 {
-    [SerializeField] private Color[] colors;
     [SerializeField] private HexGrid hexGrid;
 
-    private Color activeColor;
+    private int activeTerrainTypeIndex;
+    
     private int activeElevation, activeWaterLevel;
-
-    private bool applyColor;
+    
     private bool applyElevation = true, applyWaterLevel = true;
 
     private int activeUrbanLevel, activeFarmLevel, activePlantLevel, activeSpecialIndex;
@@ -36,7 +36,7 @@ public class HexMapEditor : MonoBehaviour
 
 	void Awake () 
 	{
-        SelectColor(0);
+        
 	}
 	
 
@@ -83,16 +83,11 @@ public class HexMapEditor : MonoBehaviour
 
     // ------------
 
-    public void SelectColor(int index)
+    public void SetTerrainTypeIndex(int index)
     {
-        applyColor = index >= 0;
-
-        if(applyColor)
-        {
-            activeColor = colors[index];
-        }
+        activeTerrainTypeIndex = index;
     }
-
+    
     public void SetElevation(float elevation)
     {
         activeElevation = (int)elevation;
@@ -178,17 +173,42 @@ public class HexMapEditor : MonoBehaviour
         walledMode = (OptionalToggle)mode;
     }
 
+    public void Save()
+    {
+        string path = Path.Combine(Application.persistentDataPath, "test.map");
+
+        using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Create)))
+        {
+            writer.Write(0);
+            hexGrid.Save(writer);
+        }
+    }
+
+    public void Load()
+    {
+        string path = Path.Combine(Application.persistentDataPath, "test.map");
+
+        using (BinaryReader reader = new BinaryReader(File.OpenRead(path)))
+        {
+            int header = reader.ReadInt32();
+            if (header == 0)
+                hexGrid.Load(reader);
+            else
+                Debug.LogWarning("Unknown map format " + header);
+        }
+    }
+
     // --------
 
     void EditCell(HexCell cell)
     {
         if (cell == null) return;
 
-        if(applyColor)
+        if(activeTerrainTypeIndex >= 0)
         {
-            cell.Color = activeColor;
+            cell.TerrainTypeIndex = activeTerrainTypeIndex;
         }
-
+        
         if(applyElevation)
         {
             cell.Elevation = activeElevation;
