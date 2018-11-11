@@ -16,10 +16,18 @@ public class HexMapCamera : MonoBehaviour
     float zoom = 1f;
     float rotationAngle;
 
+    static HexMapCamera instance;
+
+    public static bool Loocked
+    {
+        set { instance.enabled = !value; }
+    }
+
 	//========================================================
 
 	void Awake () 
 	{
+        instance = this;
         swivel = transform.GetChild(0);
         stick = swivel.GetChild(0);
 	}
@@ -76,12 +84,17 @@ public class HexMapCamera : MonoBehaviour
 
     Vector3 ClampPosition(Vector3 position)
     {
-        float xMax = (grid.chunkCountX * HexMetrics.chunckSizeX - 0.5f) * (2f * HexMetrics.innerRadius);
+        float xMax = (grid.cellCountX - 0.5f) * (2f * HexMetrics.innerRadius);
         position.x = Mathf.Clamp(position.x, 0f, xMax);
 
-        float zMax = (grid.chunkCountZ * HexMetrics.chunckSizeZ - 1f) * (1.5f * HexMetrics.outerRadius);
+        float zMax = (grid.cellCountZ - 1f) * (1.5f * HexMetrics.outerRadius);
         position.z = Mathf.Clamp(position.z, 0f, zMax);
 
         return position;
+    }
+
+    public static void ValidatePosition()
+    {
+        instance.AdjustPosition(0f, 0f);
     }
 }
