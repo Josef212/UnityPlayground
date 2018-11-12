@@ -26,7 +26,7 @@ public class HexMapEditor : MonoBehaviour
 
     private bool isDrag;
     private HexDirection dragDirection;
-    private HexCell previousCell;
+    private HexCell previousCell, searchFromCell, searchToCell;
 
     // ----
 
@@ -75,8 +75,27 @@ public class HexMapEditor : MonoBehaviour
                 isDrag = false;
             }
 
-            if (editMode) EditCells(currentCell);
-            else hexGrid.FindDistanceTo(currentCell);
+            if (editMode)
+            {
+                EditCells(currentCell);
+            }
+            else if(Input.GetKey(KeyCode.LeftShift) && searchToCell != currentCell)
+            {
+                if(searchFromCell)
+                {
+                    searchFromCell.DisableHighlight();
+                }
+
+                searchFromCell = currentCell;
+                searchFromCell.EnableHighlight(Color.blue);
+
+                if (searchToCell) hexGrid.FindPath(searchFromCell, searchToCell);
+            }
+            else if(searchFromCell && searchFromCell != currentCell)
+            {
+                searchToCell = currentCell;
+                hexGrid.FindPath(searchFromCell, currentCell);
+            }
 
             previousCell = currentCell;
         }
