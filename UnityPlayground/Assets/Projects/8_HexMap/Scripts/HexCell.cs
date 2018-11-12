@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 
 public class HexCell : MonoBehaviour 
@@ -26,6 +27,8 @@ public class HexCell : MonoBehaviour
     private bool walled;
 
     private int specialIndex;
+
+    private int distance;
 
     public int Elevation
     {
@@ -168,6 +171,16 @@ public class HexCell : MonoBehaviour
     }
 
     public bool IsSpecial { get { return specialIndex > 0; } }
+
+    public int Distance
+    {
+        get { return distance; }
+        set
+        {
+            distance = value;
+            UpdateDistanceLabel();
+        }
+    }
 
     //========================================================
 
@@ -354,6 +367,12 @@ public class HexCell : MonoBehaviour
         Vector3 uiPosition = uiRect.localPosition;
         uiPosition.z = -position.y;
         uiRect.localPosition = uiPosition;
+    }
+
+    void UpdateDistanceLabel()
+    {
+        Text label = uiRect.GetComponent<Text>();
+        label.text = distance == int.MaxValue ? "" : distance.ToString();
     }
 
     // ==========================================================

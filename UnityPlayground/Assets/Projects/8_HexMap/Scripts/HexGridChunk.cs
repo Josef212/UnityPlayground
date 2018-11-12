@@ -21,8 +21,6 @@ public class HexGridChunk : MonoBehaviour
         gridCanvas = GetComponentInChildren<Canvas>();
 
         cells = new HexCell[HexMetrics.chunckSizeX * HexMetrics.chunckSizeZ];
-
-        ShowUI(false);
     }
 
 

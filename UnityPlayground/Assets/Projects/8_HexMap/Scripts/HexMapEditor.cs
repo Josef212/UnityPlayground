@@ -7,6 +7,7 @@ using System.IO;
 public class HexMapEditor : MonoBehaviour 
 {
     [SerializeField] private HexGrid hexGrid;
+    [SerializeField] private Material terrainMaterial;
 
     private int activeTerrainTypeIndex;
     
@@ -16,6 +17,8 @@ public class HexMapEditor : MonoBehaviour
 
     private int activeUrbanLevel, activeFarmLevel, activePlantLevel, activeSpecialIndex;
     private bool applyUrbanLevel, applyFarmLevel, applyPlantLevel, applySpecialIndex;
+
+    private bool editMode;
 
     private int brushSize = 0;
 
@@ -36,8 +39,8 @@ public class HexMapEditor : MonoBehaviour
 
 	void Awake () 
 	{
-        
-	}
+        terrainMaterial.DisableKeyword("GRID_ON");
+    }
 	
 
 	void Update () 
@@ -72,7 +75,9 @@ public class HexMapEditor : MonoBehaviour
                 isDrag = false;
             }
 
-            EditCells(currentCell);
+            if (editMode) EditCells(currentCell);
+            else hexGrid.FindDistanceTo(currentCell);
+
             previousCell = currentCell;
         }
         else
@@ -111,11 +116,6 @@ public class HexMapEditor : MonoBehaviour
     public void SetBrushSize(float size)
     {
         brushSize = (int)size;
-    }
-
-    public void ShowUI(bool visible)
-    {
-        hexGrid.ShowUI(visible);
     }
 
     public void SetApplyUrbanLevel(bool toggle)
@@ -171,6 +171,18 @@ public class HexMapEditor : MonoBehaviour
     public void SetWalledMode(int mode)
     {
         walledMode = (OptionalToggle)mode;
+    }
+
+    public void ShowGrid(bool visible)
+    {
+        if (visible) terrainMaterial.EnableKeyword("GRID_ON");
+        else terrainMaterial.DisableKeyword("GRID_ON");
+    }
+
+    public void SetEditMode(bool toogle)
+    {
+        editMode = toogle;
+        hexGrid.ShowUI(!toogle);
     }
     
     // --------
