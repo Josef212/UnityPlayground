@@ -15,8 +15,6 @@ public class HexGrid : MonoBehaviour
 
     [SerializeField] private int seed;
 
-    [SerializeField] private Color[] colors;
-
     // ----
 
     HexCell[] cells;
@@ -30,14 +28,12 @@ public class HexGrid : MonoBehaviour
     {
         HexMetrics.noiseSource = noiseSource;
         HexMetrics.InitializeHashGrid(seed);
-        HexMetrics.colors = colors;
     }
 
     void Awake () 
 	{
         HexMetrics.noiseSource = noiseSource;
         HexMetrics.InitializeHashGrid(seed);
-        HexMetrics.colors = colors;
 
         CreateMap(cellCountX, cellCountZ);
 	}

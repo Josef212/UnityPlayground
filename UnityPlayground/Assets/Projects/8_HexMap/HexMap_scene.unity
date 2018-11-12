@@ -3893,7 +3893,7 @@ GameObject:
   - component: {fileID: 495293844}
   - component: {fileID: 495293843}
   m_Layer: 0
-  m_Name: Orange Toggle
+  m_Name: Stone Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8156,7 +8156,7 @@ GameObject:
   - component: {fileID: 1123841047}
   - component: {fileID: 1123841046}
   m_Layer: 0
-  m_Name: Green Toggle
+  m_Name: Grass Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9304,7 +9304,7 @@ GameObject:
   - component: {fileID: 1235921768}
   - component: {fileID: 1235921767}
   m_Layer: 0
-  m_Name: Yellow Toggle
+  m_Name: Sand Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10742,7 +10742,7 @@ GameObject:
   - component: {fileID: 1400706898}
   - component: {fileID: 1400706897}
   m_Layer: 0
-  m_Name: White Toggle
+  m_Name: Snow Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11332,7 +11332,7 @@ GameObject:
   - component: {fileID: 1454029118}
   - component: {fileID: 1454029117}
   m_Layer: 0
-  m_Name: Blue Toggle
+  m_Name: Mud Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12668,7 +12668,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Wh
+  m_Text: Sw
 --- !u!222 &1666971402
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12743,7 +12743,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Bl
+  m_Text: Md
 --- !u!222 &1674988203
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13697,7 +13697,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ye
+  m_Text: Snd
 --- !u!222 &1797355972
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14463,7 +14463,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Or
+  m_Text: Stn
 --- !u!222 &1872896491
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15393,7 +15393,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Gr
+  m_Text: Grs
 --- !u!222 &1950067198
 CanvasRenderer:
   m_ObjectHideFlags: 0
