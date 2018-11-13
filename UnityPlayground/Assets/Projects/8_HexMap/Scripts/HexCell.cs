@@ -188,6 +188,8 @@ public class HexCell : MonoBehaviour
     public HexCell NextWithSamePriority { get; set; }
     public int SearchPhase { get; set; }
 
+    public HexUnit Unit { get; set; }
+
     //========================================================
 
     public HexCell GetNeighbor(HexDirection direction)
@@ -357,11 +359,21 @@ public class HexCell : MonoBehaviour
                 }
             }
         }
+
+        if (Unit)
+        {
+            Unit.ValidateLocation();
+        }
     }
 
     void RefreshSelfOnly()
     {
         chunk.Refresh();
+
+        if (Unit)
+        {
+            Unit.ValidateLocation();
+        }
     }
 
     bool IsValidRiverDestination(HexCell neighbor)
