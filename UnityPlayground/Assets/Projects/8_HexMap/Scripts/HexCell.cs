@@ -178,7 +178,6 @@ public class HexCell : MonoBehaviour
         set
         {
             distance = value;
-            UpdateDistanceLabel();
         }
     }
 
@@ -187,6 +186,7 @@ public class HexCell : MonoBehaviour
     public int SearchPriority { get { return distance + SearchHeuristic; } }
 
     public HexCell NextWithSamePriority { get; set; }
+    public int SearchPhase { get; set; }
 
     //========================================================
 
@@ -334,6 +334,12 @@ public class HexCell : MonoBehaviour
         highlight.enabled = true;
     }
 
+    public void SetLabel(string text)
+    {
+        Text label = uiRect.GetComponent<Text>();
+        label.text = text;
+    }
+
     //========================================================
 
     void Refresh()
@@ -386,12 +392,6 @@ public class HexCell : MonoBehaviour
         Vector3 uiPosition = uiRect.localPosition;
         uiPosition.z = -position.y;
         uiRect.localPosition = uiPosition;
-    }
-
-    void UpdateDistanceLabel()
-    {
-        Text label = uiRect.GetComponent<Text>();
-        label.text = distance == int.MaxValue ? "" : distance.ToString();
     }
 
     // ==========================================================
