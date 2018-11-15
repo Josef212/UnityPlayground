@@ -41,6 +41,8 @@ public class HexGameUI : MonoBehaviour
         enabled = !toogle;
         grid.ShowUI(!toogle);
         grid.ClearPath();
+        if (toogle) Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
+        else Shader.DisableKeyword("HEX_MAP_EDIT_MODE");
     }
 
     bool UpdateCurrentCell()
@@ -73,7 +75,7 @@ public class HexGameUI : MonoBehaviour
         {
             if(currentCell && selectedUnit.IsValidDestination(currentCell))
             {
-                grid.FindPath(selectedUnit.Location, currentCell, 24);
+                grid.FindPath(selectedUnit.Location, currentCell, selectedUnit);
             }
             else
             {
