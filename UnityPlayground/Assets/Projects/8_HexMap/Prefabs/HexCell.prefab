@@ -54,13 +54,13 @@ MonoBehaviour:
   coordinates:
     x: 0
     z: 0
-  neighbours:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  chunk: {fileID: 0}
-  roads: 000000000000
   uiRect: {fileID: 0}
+  chunk: {fileID: 0}
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  roads: 000000000000

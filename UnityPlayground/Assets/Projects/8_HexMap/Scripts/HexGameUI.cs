@@ -88,7 +88,7 @@ public class HexGameUI : MonoBehaviour
     {
         if(grid.HasPath)
         {
-            selectedUnit.Travel(grid.Getpath());
+            selectedUnit.Travel(grid.GetPath());
             grid.ClearPath();
         }
     }
