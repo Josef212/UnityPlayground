@@ -4,10 +4,13 @@ public class NewMapMenu : MonoBehaviour
 {
 
     [SerializeField] private HexGrid hexGrid;
-    
-	//========================================================
+    [SerializeField] private HexMapGenerator mapGenerator;
 
-	public void Open()
+    private bool generateMaps = true;
+
+    //========================================================
+
+    public void Open()
     {
         gameObject.SetActive(true);
         HexMapCamera.Loocked = true;
@@ -34,11 +37,24 @@ public class NewMapMenu : MonoBehaviour
         CreateMap(80, 60);
     }
 
+    public void ToogleMapGeneration(bool toogle)
+    {
+        generateMaps = toogle;
+    }
+
     // ------------------------------------------------------------
 
     void CreateMap(int x, int z)
     {
-        hexGrid.CreateMap(x, z);
+        if(generateMaps)
+        {
+            mapGenerator.GenerateMap(x, z);
+        }
+        else
+        {
+            hexGrid.CreateMap(x, z);
+        }
+        
         HexMapCamera.ValidatePosition();
         Close();
     }
