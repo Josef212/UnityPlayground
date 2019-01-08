@@ -16,10 +16,10 @@ public class Response
 
         IsError = false;
 
-        if(errorData == "ERROR")
+        if(errorData != null)
         {
             ErrorKey = "ERROR";
-            ErrorValue = "ERROR_VALUE";
+            ErrorValue = errorData;
             IsError = true;
         }
 
