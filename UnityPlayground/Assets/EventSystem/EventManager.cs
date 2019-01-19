@@ -4,6 +4,7 @@ using UnityEngine;
 public class EventManager
 {
     private Dictionary<EventType, List<EventListener>> m_eventListeners = new Dictionary<EventType, List<EventListener>>();
+    private Queue<KeyValuePair<EventType, Response>> m_eventQueue = new Queue<KeyValuePair<EventType, Response>>();
 
     public EventManager()
     {
@@ -57,6 +58,25 @@ public class EventManager
         foreach(var listener in listeners)
         {
             listener.RecieveEvent(type, response);
+        }
+    }
+
+    public void QueueEvent(EventType type, Response response)
+    {
+        m_eventQueue.Enqueue(new KeyValuePair<EventType, Response>(type, response));
+    }
+
+    public void FireOneQueuedEvent()
+    {
+        var ev = m_eventQueue.Dequeue();
+        FireEvent(ev.Key, ev.Value);
+    }
+
+    public void FireAllQueuedEvents()
+    {
+        while(m_eventQueue.Count != 0)
+        {
+            FireOneQueuedEvent();
         }
     }
 }
