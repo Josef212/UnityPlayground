@@ -17,7 +17,7 @@ public class Graph : MonoBehaviour
     {
         SineFunction, MultiSineFunction,
         Sine2DFunction, MultiSine2DFunction, RippleFunction,
-        CylinderFunction, SphereFunction, TorusFunction
+        CylinderFunction, SphereFunction, TorusFunction, HeartFunction
     };
 
 
@@ -39,6 +39,8 @@ public class Graph : MonoBehaviour
         }
 
         float t = Time.time;
+        amplitud = (amplitud + t) % 20.0f;
+
         GraphFunction f = functions[(int)function];
 
         float step = 2f / resolution;
@@ -195,6 +197,27 @@ public class Graph : MonoBehaviour
         p.x = s * Mathf.Sin(pi * u);
         p.y = r2 * Mathf.Sin(pi * v);
         p.z = s * Mathf.Cos(pi * u);
+
+        return p;
+    }
+
+    public static float amplitud = 1.0f;
+
+    const float twoThirds = 2f / 3f;
+    static Vector3 HeartFunction(float x, float y, float z)
+    {
+        Vector3 p;
+
+        p.x = x;
+        p.z = z;
+    
+        float a = Mathf.Pow(x, twoThirds);
+        float b = Mathf.Pow(3.3f - (x * x), 0.5f);
+        float c = Mathf.Sin(amplitud * pi * x);
+        float d = 0.9f * b * c;
+        float e = a + d;
+        p.y = e;
+        //p.y = Mathf.Pow(x, twoThirds) + (0.9f * Mathf.Pow(3.3f - (x * x), 0.5f) * Mathf.Sin(amplitud * pi * x));       
 
         return p;
     }

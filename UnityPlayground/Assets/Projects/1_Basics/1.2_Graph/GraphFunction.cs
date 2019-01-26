@@ -11,5 +11,6 @@ public enum GraphFunctionName
     Ripple,
     Cylinder,
     Sphere,
-    Torus
+    Torus,
+    Heart
 }
