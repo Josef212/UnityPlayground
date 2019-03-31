@@ -22,4 +22,12 @@ public class EnumUtils<T>
     {
         return System.Enum.GetName(typeof(T), type);
     }
+
+    public static void ForEach(System.Action<T> callback)
+    {
+        foreach(var x in System.Enum.GetValues(typeof(T)))
+        {
+            callback((T)x);
+        }
+    }
 }
